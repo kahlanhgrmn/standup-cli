@@ -17,7 +17,7 @@ export async function summariseCommits(commits: Commit[]): Promise<string>{
                 Given the following git commits, write a concise standup summary of the commits in plain English. 
                 Write the summary in the first person and in past tense, as if the developer themself is speaking. 
                 Group all related commits together in a way that makes sense for the commits, and keep it to about 3-5 sentences. 
-                Write it in the form of a paragraph, and don't make it bulleted or a list, just as a normal paragraph. 
+                Write it in one or more paragraphs that are grouped by theme, and don't make it bulleted or a list, just as a normal paragraph. 
                 Do not include any introduction line or preamble, and also do not include any quotes. Only include the summary 
                 paragraph itself. Do not make it sound overly friendly or excited, keep it professional and concise.
                 

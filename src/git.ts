@@ -12,7 +12,7 @@ export function getRecentCommits(hours: number = 24, repoPath: string = "."): Co
     const sinceTimestamp = Math.floor(Date.now() / 1000) - hours * 60 * 60;
 
     const format = "%H|%s|%an|%ai";
-    const command = `git -C "${repoPath}" log --since="${sinceTimestamp}" --format="${format}"`;
+    const command = `git -C "${repoPath}" log --since="${sinceTimestamp}" --reverse --format="${format}"`;
 
     let output: string;
 
