@@ -1,7 +1,7 @@
+import "dotenv/config";
 import {getConfig} from "./config";
 import {getRecentCommits} from "./git";
 import {summariseCommits} from "./ai";
-import "dotenv/config";
 
 async function main(){
     const config = getConfig();

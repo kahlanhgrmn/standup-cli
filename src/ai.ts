@@ -1,8 +1,7 @@
-import {GoogleGenerativeAI} from "@google/generative-ai";
 import {Commit} from "./git";
 
-const client = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-
+const OLLAMA_URL = "http://localhost:11434/api/generate";
+const MODEL = "llama3.2";
 
 function formatCommits(commits: Commit[]): string{
     return commits
@@ -12,8 +11,6 @@ function formatCommits(commits: Commit[]): string{
 
 export async function summariseCommits(commits: Commit[]): Promise<string>{
     const formatted = formatCommits(commits);
-
-    const model = client.getGenerativeModel({model: "gemini-1.5-flash"});
 
     const prompt = `You are a helpful assistant that will write daily standup summaries for developers.
                 
@@ -25,7 +22,23 @@ export async function summariseCommits(commits: Commit[]): Promise<string>{
                 Commits:
                 ${formatted}`;
 
-    const result = await model.generateContent(prompt);
 
-    return result.response.text();
+    const response = await fetch(OLLAMA_URL, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            model: MODEL,
+            prompt,
+            stream: false,
+        }),
+    });
+
+    if(!response.ok){
+        throw new Error(`ollama request failed with status ${response.status}`);
+
+
+    }
+
+    const data = await response.json() as {response: string};
+    return data.response;
 }
