@@ -1,6 +1,6 @@
 import {Commit} from "./git";
 
-const OLLAMA_URL = "http://localhost:11434/api/generate";
+const OLLAMA_URL = process.env.OLLAMA_URL || "http://localhost:11434/api/generate";
 const MODEL = "llama3.2";
 
 function formatCommits(commits: Commit[]): string{
